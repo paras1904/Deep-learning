@@ -20,4 +20,3 @@ model = Sequential([
 ])
 model.compile(optimizer="adam",metrics=['accuracy'],loss='sparse_categorical_crossentropy')
 model.fit(trainX,trainY,epochs=1,verbose=2)
-print(1)
