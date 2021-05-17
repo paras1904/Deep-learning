@@ -1,10 +1,6 @@
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-
 from sklearn.datasets import load_boston
+
 boston = load_boston()
 data = pd.DataFrame(boston.data)
 data.columns = boston.feature_names
@@ -17,8 +13,11 @@ from sklearn.model_selection import train_test_split
 X_train,X_test,Y_train,Y_test = train_test_split(X,Y,random_state=0,
                                                  shuffle=False,
                                                  train_size=70)
-
-
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+scaler.fit(X_train)
+X_train_S = scaler.transform(X_train)
+X_test_S = scaler.transform(X_test)
 
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.models import Sequential
@@ -31,7 +30,8 @@ model = Sequential([
 ])
 model.compile(optimizer='adam',loss='mean_squared_error',
              metrics=['accuracy'])
-model.fit(X_train,Y_train,epochs=100,shuffle=False,verbose=2)
-
-a = model.predict([[0.00632,8.0,2.31,0.0,0.538,6.575,65.2,4.0900,1.0,296.0,15.3,396.90,4.98]])
-print(a)
+model.fit(X_train_S,Y_train,epochs=100,shuffle=False,verbose=2)
+a = model.predict([[X_test_S]])
+print(a[0])
+print(Y_test)
+print(model.evaluate(X_test_S,Y_test))
