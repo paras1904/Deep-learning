@@ -1,11 +1,6 @@
 import numpy
 import numpy as np
 import pandas as pd
-import pandas_datareader as pdr
-
-# key = 'search your own authentication key on tiingo.com '
-# df = pdr.get_data_tiingo('AAPL',api_key = key)
-# df.to_csv('AAPL.csv')
 
 df = pd.read_csv('AAPL.csv')
 # print(df.head())
@@ -58,6 +53,7 @@ test_predict = model.predict(X_test)
 
 train_predict = scaler.inverse_transform(train_predict)
 test_predict = scaler.inverse_transform(test_predict)
+
 
 import math
 from sklearn.metrics import mean_squared_error
